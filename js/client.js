@@ -14,16 +14,20 @@
 const Username = prompt("Enter your Username for Joining");
  socket.emit('new-user-joined', Username);
  socket.on('user-joined', name=>{
-    append(`${name} joined the chat`, 'right');
+    append(`${name} joined.`, 'left');
  })
  socket.on('receive', data =>{
-   append(`${data.name}: ${data.message}`, 'left');
+   append(`${data.name}: ${data.message}`, 'right');
+})
+
+socket.on('room-created', newRoom =>{
+  append(`Room ${newRoom} created. Waiting for second player to join.`)
 })
 
 form.addEventListener('submit',(e)=>{
    e.preventDefault();
    const message = messageInput.value ;
-   append(`You: ${message}`, 'right');
+   append(`You: ${message}`, 'left');
    socket.emit('send', message);
    messageInput.value = '';
 });

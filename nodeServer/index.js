@@ -28,16 +28,19 @@ io.on('connection', socket => {
       rooms[newRoom] = [socket.id];
       socket.join(newRoom);
       socket.emit('room-created', newRoom);
+      io.to(newRoom).emit('user-joined', name);
     } else {
       rooms[room].push(socket.id);
       socket.join(room);
     }
-
+    users[socket.id] = name;
     io.to(room).emit('user-joined', name);
   });
 
   socket.on('send', message => {
-    const room = Object.keys(socket.rooms).find(room => room !== socket.id);
+    const roomsArray = Array.from(socket.rooms);
+    const room = roomsArray.find(roomName => roomName !== socket.id);
+    console.log(users)
     io.to(room).emit('receive', { message: message, name: users[socket.id] });
   });
 

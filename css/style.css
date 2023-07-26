@@ -36,6 +36,10 @@ body{
     float: right;
     clear: both;
 }
+.user-joined{
+    float: center;
+    clear: both;
+}
 .btn{
     cursor: pointer;
     border: 2px rgb(2, 150, 248);
