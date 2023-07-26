@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .landing-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  /* Styles for the chatbox */
+  .chatbox {
+    flex: 1;
+    background-color: #222;
+    padding: 20px;
+    max-width: 300px;
+    margin-right: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .chatbox h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid white;
+    color: white;
+  }
+  
+  .chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .message {
+    margin: 5px 0;
+    color: white;
+  }
+  
+  .chat-input {
+    display: flex;
+  }
+  
+  .chat-input input[type="text"] {
+    flex: 1;
+    padding: 5px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+  }
+  
+  .chat-input button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+  }
+  
+  /* Styles for the main content */
+  nav {
+    margin-top: 20px;
+  }
+  
+  nav .logo {
+    width: 150px;
+  }
+  
+  .game-cards {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    max-width: 600px;
+    margin-top: 40px;
+  }
+  
+  .game-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .game-card img {
+    width: 200px;
+    margin-bottom: 10px;
+  }
+  
+  .play-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .play-button:hover {
+    background-color: #45a049;
+  }
