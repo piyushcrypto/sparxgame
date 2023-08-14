@@ -10,11 +10,10 @@ body{
     height: 100vh;
     background-image: linear-gradient(rgb(211, 52, 41),rgb(24, 87, 223));
 }
-.chatbox{
 
-}
 .messagecontainer{
     display: block;
+    background-color: rgba(56, 54, 54, 0.973);
     max-width: 400px;
     margin: 20px;
     height: 70vh;
@@ -47,6 +46,28 @@ body{
     margin-bottom: 20px;
     margin-top: 115px;
 }
+.questioncontainer{
+    display: block;
+    max-width: 500px;
+    margin: 100px;
+    height: 10vh;
+    padding: 33px;
+    border: 5px solid rgb(201, 231, 26);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 115px;
+}
+.hintcontainer{
+    display: block;
+    max-width: 500px;
+    margin: 100px;
+    height: 10vh;
+    padding: 33px;
+    border: 5px solid rgb(201, 231, 26);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 115px;
+}
 .message{
     background-color: white;
     width: 70%;
@@ -65,16 +86,36 @@ body{
     clear: both;
     background-color: white;
 }
+.timercontainer{
+    display: block;
+    max-width: 50px;
+    margin: 50px;
+    height: 50px;
+    padding: 3px;
+    border: 2px solid rgb(201, 231, 26);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 50px;
+}
 .user-joined{
     float: center;
     clear: both;
 }
 .btn{
     cursor: pointer;
-    border: 2px rgb(2, 150, 248);
+    border: 2px solid rgb(53, 53, 53);
     border-radius: 6px;
     height: 34px;
     margin: 10px;
+    background-color: green;
+}
+.btn-yourturn{
+    cursor: pointer;
+    border: 2px solid rgb(53, 53, 53);
+    border-radius: 6px;
+    height: 34px;
+    margin: 10px;
+    background-color: rgb(238, 58, 58);
 }
 #send-container{
     display: block;
@@ -83,25 +124,26 @@ body{
     max-width: 300px;
     width: 100%;
 }
-#answersubmit{
-    display: block;
-    margin: 20px;
-    text-align: center;
-    max-width: 100%;
-    width: 100%;
-}
 #messageInp{
     width: 92%;
     border: 2px solid red;
     border-radius: 6px;
     height: 34px;
 }
-#answer-container{
+#answerInp{
+    width: 92%;
     border: 2px solid red;
-    background-color: white;
     border-radius: 6px;
     height: 34px;
 }
-#answerInp{
-    width: 100%;
+#answercontainer{
+    display: block;
+    max-width: 800px;
+    margin: 100px;
+    height: 10vh;
+    padding: 33px;
+    border: 5px solid rgb(201, 231, 26);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    margin-top: 115px;
 }
