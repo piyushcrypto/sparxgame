@@ -3,14 +3,26 @@ const fs = require('fs');
 const app = express();
 const axios = require('axios');
 const httpServer = require('http').createServer(app);
-const io = require('socket.io')(httpServer);
+const io = require('socket.io')(httpServer, {
+  cors: {
+    origin: '*', // update this to match the client's origin
+    methods: ["GET", "POST"]
+  }
+});
+
+const cors = require('cors');
+
+// Enable all CORS requests
+app.use(cors());
+
+
 
 const MAX_PLAYERS_PER_ROOM = 2; // Maximum players allowed per room
 const MAX_ROUNDS_PER_GAME = 10;
 const WORDS_PER_ROOM = 10;
 const INITIAL_ROUND_TIME = 30000; // 30 seconds
-const TIME_DECREMENT_PER_ROUND = 1000;
-
+let TIME_DECREMENT_PER_ROUND = 1000;
+const resetCurrentRoundTime = () => INITIAL_ROUND_TIME - TIME_DECREMENT_PER_ROUND; // Function to reset round time
 const rooms = {}; // Object to store rooms and their players
 const users = {}; // Object to store the users
 
@@ -60,7 +72,8 @@ io.on('connection', socket => {
     } else {
         rooms[room].players.push(socket.id);
         socket.join(room);
-        io.to(room).emit('user-joined', name);      
+        io.to(room).emit('user-joined', name);   
+        io.to(room).emit('player-two-joined', name);         
     }
     users[socket.id] = { name: name, score: 0 };
     if(room){
@@ -73,7 +86,7 @@ io.on('connection', socket => {
             setTimeout(() => {
             //initialize the round start
                 startRound(room);
-            }, 5000);
+            }, 3000);
         } 
     } 
   });
@@ -92,8 +105,8 @@ io.on('connection', socket => {
 
     if (answer === correctWord && !rooms[room].roundWinner) {
       users[socket.id].score += 1;
+      clearTimeout(rooms[room].timer);
       rooms[room].roundWinner = true;
-      io.to(room).emit('clear-countdown');
       io.to(room).emit('round-winner', { name: users[socket.id].name });
       setTimeout(() => startRound(room), 2000);
     }
@@ -123,7 +136,7 @@ const startRound = async (room) => {
     endGame(room);
     return;
   }
-
+  rooms[room].currentRoundTime = resetCurrentRoundTime() ;
   const originalWord = rooms[room].words[rooms[room].currentRound].original;
   const wordDetails = await fetchWordDetails(originalWord);
   const meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
@@ -132,24 +145,22 @@ const startRound = async (room) => {
   const shuffledWord = rooms[room].words[rooms[room].currentRound].shuffled;
   io.to(room).emit('start-round', {shuffledWord: shuffledWord, hint: meaning});
 
-  // Store the reference to the timer in the room object
-  rooms[room].timer = setTimeout(() => {
-    if (!rooms[room] || !rooms[room].roundWinner) { // Check if rooms[room] exists
-      if (rooms[room]) {
-        io.to(room).emit('round-timeout', originalWord); // Emit a timeout event only if room exists
-        io.to(room).emit('clear-countdown');
+  const timerId = setTimeout(() => {
+    if (rooms[room]) { // Check if rooms[room] exists
+        if(!rooms[room].roundWinner){
+          io.to(room).emit('round-timeout', originalWord); // Emit a timeout event only if room exists
+          startRound(room);
       }
-      startRound(room);
     }
   }, rooms[room].currentRoundTime);
-
-  rooms[room].currentRoundTime -= TIME_DECREMENT_PER_ROUND;
+  rooms[room].timer = timerId;
+  TIME_DECREMENT_PER_ROUND = TIME_DECREMENT_PER_ROUND + 1000;
   rooms[room].currentRound += 1;
 };
 
 
 const endGame = (room) => {
-  let winner; // Declare winner variable here
+  let winner;
   const scores = rooms[room].players.map(playerId => users[playerId].score);
   if (scores[0] > scores[1]) {
     winner = users[rooms[room].players[0]].name;

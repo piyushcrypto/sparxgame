@@ -1,149 +1,143 @@
-.logo{
-    display: block;
-    margin-left: 170px;
-    margin-top:15px ;
-    width: 85px;
-    height: 85px;
-    margin-bottom: 10px;
-}
-body{
-    height: 100vh;
-    background-image: linear-gradient(rgb(211, 52, 41),rgb(24, 87, 223));
-}
 
-.messagecontainer{
-    display: block;
-    background-color: rgba(56, 54, 54, 0.973);
-    max-width: 400px;
-    margin: 20px;
-    height: 70vh;
-    padding: 33px;
-    border: 5px solid rgb(2, 150, 248);
-    border-radius: 12px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-}
-.imgcontainer{
-    display: block;
-    max-width: 800px;
-    margin: 100px;
-    height: 70vh;
-    padding: 33px;
-    border: 5px solid rgb(201, 231, 26);
-    border-radius: 12px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-    margin-top: 115px;
-}
-.answercontainer{
-    display: block;
-    max-width: 800px;
-    margin: 100px;
-    height: 10vh;
-    padding: 33px;
-    border: 5px solid rgb(201, 231, 26);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    margin-top: 115px;
-}
-.questioncontainer{
-    display: block;
-    max-width: 500px;
-    margin: 100px;
-    height: 10vh;
-    padding: 33px;
-    border: 5px solid rgb(201, 231, 26);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    margin-top: 115px;
-}
-.hintcontainer{
-    display: block;
-    max-width: 500px;
-    margin: 100px;
-    height: 10vh;
-    padding: 33px;
-    border: 5px solid rgb(201, 231, 26);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    margin-top: 115px;
-}
-.message{
-    background-color: white;
-    width: 70%;
-    padding: 10px;
-    margin: 17px 3px;
-    border: 2px solid rgb(2, 150, 248);
-    border-radius: 12px;
-}
-.left{
-    float: left;
-    clear: both;
-    background-color: blue;
-}
-.right{
-    float: right;
-    clear: both;
-    background-color: white;
-}
-.timercontainer{
-    display: block;
-    max-width: 50px;
-    margin: 50px;
-    height: 50px;
-    padding: 3px;
-    border: 2px solid rgb(201, 231, 26);
-    border-radius: 5px;
-    margin-bottom: 10px;
-    margin-top: 50px;
-}
-.user-joined{
-    float: center;
-    clear: both;
-}
-.btn{
-    cursor: pointer;
-    border: 2px solid rgb(53, 53, 53);
-    border-radius: 6px;
-    height: 34px;
-    margin: 10px;
-    background-color: green;
-}
-.btn-yourturn{
-    cursor: pointer;
-    border: 2px solid rgb(53, 53, 53);
-    border-radius: 6px;
-    height: 34px;
-    margin: 10px;
-    background-color: rgb(238, 58, 58);
-}
-#send-container{
-    display: block;
-    margin: 20px;
-    text-align: center;
-    max-width: 300px;
-    width: 100%;
-}
-#messageInp{
-    width: 92%;
-    border: 2px solid red;
-    border-radius: 6px;
-    height: 34px;
-}
-#answerInp{
-    width: 92%;
-    border: 2px solid red;
-    border-radius: 6px;
-    height: 34px;
-}
-#answercontainer{
-    display: block;
-    max-width: 800px;
-    margin: 100px;
-    height: 10vh;
-    padding: 33px;
-    border: 5px solid rgb(201, 231, 26);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    margin-top: 115px;
-}
+    .logo {
+        display: block;
+        margin: 30px auto;
+        width: 85px;
+        height: 85px;
+    }
+    body {
+        background-image: url('../background.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed; 
+    }
+    .messagecontainer{
+        overflow-y: auto;
+    }
+    .messagecontainerparent{
+        display: block;
+        background-color: rgba(255, 255, 255, 0.973);
+        margin: 20px auto;
+        margin-right: 2vh;
+        padding: 10px;
+        border: 2px solid #6E00FF;
+        border-radius: 12px;
+    }
+    .hintcontainer {
+        display: block;
+        background-color: black;
+        margin: 20px auto;
+        padding: 33px;
+        border: 2px solid grey;
+        border-radius: 12px;
+        overflow-y: auto;
+    }
+    .synonymcontainer {
+        display: block;
+        background-color: black;
+        margin: 20px auto;
+        padding: 33px;
+        border: 2px solid grey;
+        border-radius: 12px;
+        overflow-y: auto;
+    }
+    .questioncontainer{
+        display: block;
+        background-color: black;
+        padding: 33px;
+        margin-top: 21px;
+        border: 2px solid gray;
+        border-radius: 12px;
+        overflow-y: auto;
+        height: 17vh;
+    }
+    .messagecontainer{
+        height: 55vh;
+    }
+    .answercontainer, .hintcontainer, .synonymcontainer {
+        max-width: 500px;
+        height: 20vh;
+    }
+    .message {
+        background-color: white;
+        color: #000;
+        width: 70%;
+        padding: 10px;
+        margin: 17px 3px;
+        border: 2px solid rgb(2, 150, 248);
+        border-radius: 12px;
+    }
+    .left {
+        float: left;
+        clear: both;
+        background-color: #6E00FF;
+    }
+    .right {
+        float: right;
+        clear: both;
+        background-color: #E7E7E7;
+    }
+    .timercontainer {
+        display: block;
+        padding: 3px;
+        border-radius: 5px;
+    }
+    .btn, .btn-yourturn {
+        cursor: pointer;
+        border: 2px solid rgb(53, 53, 53);
+        border-radius: 6px;
+        height: 34px;
+        margin: 10px;
+        padding: 0 20px;
+        color: #fff;
+    }
+    .btn {
+        background-color: #6E00FF;
+    }
+    .btn-yourturn {
+        background-color: rgb(238, 58, 58);
+    }
+    #send-container, #answer-container {
+        display: block;
+        margin: 5px auto;
+        text-align: center;
+        width: 100%;
+    }
+    #messageInp, #answerInp {
+        width: 92%;
+    }
+    .col-4, .col-8 {
+        padding: 0 15px;
+    }
+    nav {
+        text-align: center;
+    }
+    .send {
+        text-align: center;
+        border: 2px solid #6E00FF;
+        border-radius: 6px;
+        padding: 10px;
+    }
+    .userdetails {
+        display: flex;
+        align-items: center;
+        background-color: #E7E7E7; /* Grey background */
+    }
+    
+    .avatar-container {
+        width: 60px; /* Increased size of avatar container */
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    
+    .avatar {
+        width: 100%;
+        height: auto;
+    }
+    
+    .username {
+        margin-left: 15px; /* Increased margin to space out from larger avatar */
+        font-size: 20px; /* Increased font size */
+        font-weight: bold; /* Bold text */
+    }

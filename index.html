@@ -10,28 +10,50 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="row">
-        <div class="col-4">
-            <nav>
-                <img class='logo' src="logo.png" alt="">
-            </nav>
-            <div class="messagecontainer"></div>
-            <div class="send">
-                <form action="#" id="send-container">
-                    <input type="text" name="messageInp" id="messageInp">
-                    <button class="btn" type="submit">Send</button>
-                </form>
-            </div>
+    <div class="flex-row d-flex justify-content-around align-item-center">
+        <div class=""><h1 class="pt-3" style="color: white; font-weight:1000; font-size:75px">KNOCKOUT</h1></div>    
+    </div>
+    <div class = "row" style="margin-top: -2rem;">
+        <div class="flex-row d-flex col-9 justify-content-around">
+            <div class = "timercontainer align-self-center" style="color: white; font-weight:600; font-size:75px"></div>
+            <div style="margin-right: 9rem; color: white; font-weight:600; font-size:75px">0:0</div>
         </div>
-        <div class="col-8">
-            <div class="imgcontainer">
-                <div class = "timercontainer"></div>
-                <div class = "questioncontainer"></div>
-                <div class = "hintcontainer"></div>
-                <div class= "answercontainer">
-                    <form action="#" id="answer-container">
-                        <input type="text" name="answerInp" id="answerInp" placeholder="Please type your answer and press enter">
-                        <button class="btn" type="submit">Submit</button>
+    </div>
+
+    <div class="row">
+        <div class="col-9">            
+                <div class="d-flex justify-content-end">
+                    <div class=" col-8">
+                        <div class = "questioncontainer" style="color: white;"></div>
+                        <div class="d-flex flex-row gap-1 ">
+                            <div class = "w-100 hintcontainer" style="color: white;"></div>
+                            <div class = "w-100 synonymcontainer" style="color: white;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <div class=" col-8">
+                        <form action="#" id="answer-container">
+                            <input type="text" name="answerInp" id="answerInp" placeholder="Please type your answer and press enter">
+                            <button class="btn" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                     
+        </div>
+        <div class="col-3">
+            <div class = "messagecontainerparent">
+                <div class="userdetails">
+                    <div class="avatar-container">
+                        <img src="path-to-avatar-image.jpg" alt="User Avatar" class="avatar">
+                    </div>
+                    <div class="username">John Doe</div>
+                </div>
+                <div class="messagecontainer"></div>
+                <div class="send">
+                    <form class=" d-flex flex-row align-items-center justify-content-center " action="#" id="send-container">
+                        <input type="text" name="messageInp" id="messageInp">
+                        <button class="btn" type="submit">Send</button>
                     </form>
                 </div>
             </div>
