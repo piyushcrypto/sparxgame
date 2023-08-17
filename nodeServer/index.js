@@ -21,8 +21,7 @@ const MAX_PLAYERS_PER_ROOM = 2; // Maximum players allowed per room
 const MAX_ROUNDS_PER_GAME = 10;
 const WORDS_PER_ROOM = 10;
 const INITIAL_ROUND_TIME = 30000; // 30 seconds
-let TIME_DECREMENT_PER_ROUND = 1000;
-const resetCurrentRoundTime = () => INITIAL_ROUND_TIME - TIME_DECREMENT_PER_ROUND; // Function to reset round time
+const resetCurrentRoundTime = (round) => INITIAL_ROUND_TIME - round*1000; // Function to reset round time
 const rooms = {}; // Object to store rooms and their players
 const users = {}; // Object to store the users
 
@@ -117,6 +116,7 @@ io.on('connection', socket => {
       const index = rooms[room].players.indexOf(socket.id);
       if (index !== -1) {
         rooms[room].players.splice(index, 1);
+        clearTimeout(rooms[room].timer);
         io.to(room).emit('room-closed', users[socket.id]); // Inform remaining players that the room has been closed
         delete rooms[room]; // Delete the room
         break;
@@ -136,25 +136,25 @@ const startRound = async (room) => {
     endGame(room);
     return;
   }
-  rooms[room].currentRoundTime = resetCurrentRoundTime() ;
+  rooms[room].currentRoundTime = resetCurrentRoundTime(rooms[room].currentRound) ;
   const originalWord = rooms[room].words[rooms[room].currentRound].original;
   const wordDetails = await fetchWordDetails(originalWord);
   const meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
 
   rooms[room].roundWinner = false; // Initialize roundWinner to false
   const shuffledWord = rooms[room].words[rooms[room].currentRound].shuffled;
-  io.to(room).emit('start-round', {shuffledWord: shuffledWord, hint: meaning});
+  io.to(room).emit('start-round', {shuffledWord: shuffledWord, hint: meaning, roundTime: rooms[room].currentRoundTime});
 
   const timerId = setTimeout(() => {
     if (rooms[room]) { // Check if rooms[room] exists
         if(!rooms[room].roundWinner){
+          clearTimeout(timerId)
           io.to(room).emit('round-timeout', originalWord); // Emit a timeout event only if room exists
           startRound(room);
       }
     }
   }, rooms[room].currentRoundTime);
   rooms[room].timer = timerId;
-  TIME_DECREMENT_PER_ROUND = TIME_DECREMENT_PER_ROUND + 1000;
   rooms[room].currentRound += 1;
 };
 

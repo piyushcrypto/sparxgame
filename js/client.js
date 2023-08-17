@@ -71,6 +71,7 @@ socket.on('room-created', newRoom => {
 
 socket.on('room-closed', data => {
   questionContainer.innerHTML = '';
+  clearInterval(countdown)
   questionappend(`Player 2 exited the Room. Creating a new room for you in 3 Seconds.  `);
   setTimeout(() => {
     // Reload the page after the logic is executed
@@ -85,15 +86,11 @@ socket.on('start-round', data => {
   questionappend(`New round started! Unscramble the word: ${data.shuffledWord}`);
   hintappend(`Hint: Meaning : ${data.hint}`);
   answerInput.value = ''; // Clear the answer input box
-  let timertime = resetCurrentRoundTime();
-  timerappend(timertime / 1000);
+  let timertime = data.roundTime
   countdown = setInterval(() => {
     timerContainer.innerHTML = '';
     timertime -= 1000; // Decrease by 1 second
     timerappend(timertime / 1000);
-    if (timertime <= 0) {
-      clearInterval(countdown);
-    }
   }, 1000);
   TIME_DECREMENT_PER_ROUND = TIME_DECREMENT_PER_ROUND + 1000;
 });
@@ -106,6 +103,7 @@ socket.on('round-winner', data => {
 
 socket.on('round-timeout', originalWord => {
   questionContainer.innerHTML = ''; 
+  clearInterval(countdown)
   questionappend(`Round Timed Out. The correct answer is ${originalWord}!`);
 });
 
@@ -136,8 +134,3 @@ answerform.addEventListener('submit', (e) => {
   answerInput.value = '';
 });
 
-// Handle submission of answers
-// answerInput.addEventListener('change', (e) => {
-//   const answer = answerInput.value;
-//   socket.emit('player-answer', answer);
-// });
