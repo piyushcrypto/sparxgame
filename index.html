@@ -11,8 +11,15 @@
 </head>
 <body>
     <div class="flex-row d-flex justify-content-around align-item-center">
-        <div class=""><h1 class="pt-3" style="color: white; font-weight:1000; font-size:75px">KNOCKOUT</h1></div>    
+        <div class="heading mt-3 mb-3">
+            <div class="bg-gradient d-flex align-items-center justify-content-center">
+                <div class="ps-img"><img src="pslogo.png"></div>
+                <span class="span-class">Presents</span>
+                <h1 class="" style="color: white; font-weight:1000; font-size:75px">KNOCKOUT</h1>
+            </div>
+        </div>
     </div>
+    <div class="container"><h2 class="next-heading">The Ultimate Word Guessing Game</h2></div>
     <div class = "row" style="margin-top: -2rem;">
         <div class="flex-row d-flex col-9 justify-content-around">
             <div class = "timercontainer align-self-center" style="color: white; font-weight:600; font-size:75px"></div>
@@ -22,24 +29,23 @@
 
     <div class="row">
         <div class="col-9">            
-                <div class="d-flex justify-content-end">
-                    <div class=" col-8">
-                        <div class = "questioncontainer" style="color: white;"></div>
+                <div class="container">
+                    <div class="">
+                        <div class = "questioncontainer d-flex justify-content-center align-item-center" style="color: white;"></div>
                         <div class="d-flex flex-row gap-1 ">
                             <div class = "w-100 hintcontainer" style="color: white;"></div>
                             <div class = "w-100 synonymcontainer" style="color: white;"></div>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-end">
-                    <div class=" col-8">
-                        <form action="#" id="answer-container">
+                <div class="container w-50 m-auto">
+                    <form action="#" id="answer-container">
+                        <div class="d-flex align-items-center justify-content-center">
                             <input type="text" name="answerInp" id="answerInp" placeholder="Please type your answer and press enter">
-                            <button class="btn" type="submit">Submit</button>
-                        </form>
-                    </div>
-                </div>
-                     
+                            <button class="ansbtn" type="submit">Submit</button>
+                        </div>
+                    </form>                    
+                </div>                     
         </div>
         <div class="col-3">
             <div class = "messagecontainerparent">

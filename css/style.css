@@ -20,7 +20,7 @@
         margin: 20px auto;
         margin-right: 2vh;
         padding: 10px;
-        border: 2px solid #6E00FF;
+        border: 2px solid darkgoldenrod;
         border-radius: 12px;
     }
     .hintcontainer {
@@ -28,7 +28,7 @@
         background-color: black;
         margin: 20px auto;
         padding: 33px;
-        border: 2px solid grey;
+        border: 2px solid darkgoldenrod;;
         border-radius: 12px;
         overflow-y: auto;
     }
@@ -37,22 +37,61 @@
         background-color: black;
         margin: 20px auto;
         padding: 33px;
-        border: 2px solid grey;
+        border: 2px solid darkgoldenrod;;
         border-radius: 12px;
         overflow-y: auto;
+    }
+    .bg-gradient{
+        background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #efc443 100%);
+    }
+    .next-heading{
+        color: white;
+        text-align: center;
+        font-size: 35px;
+        font-style: italic;
+        margin-bottom: 30px;
+    }
+    .span-class{
+        color: white;
+        margin: 0 15px;
+        font-size: 22px;
+        margin-top: 20px;
+    }
+    .ps-img{
+        width: 450px;
+        padding: 10px 0;
+    }
+    .ps-img img{
+        width: 100%;
+    }
+    .question{
+        font-size: 25px;
+    }
+    .questionword{
+        font-size: 55px;
+        font-weight: bolder;
+        color: white;
+        position: absolute;
+        align-items: center;
+        justify-content: center;
+        margin-top: 3vh;
+    }
+    .hint{
+        font-size: larger;
+        font-weight: bolder;
     }
     .questioncontainer{
         display: block;
         background-color: black;
         padding: 33px;
         margin-top: 21px;
-        border: 2px solid gray;
+        border: 2px solid darkgoldenrod;;
         border-radius: 12px;
         overflow-y: auto;
         height: 17vh;
     }
     .messagecontainer{
-        height: 55vh;
+        height: 35vh;
     }
     .answercontainer, .hintcontainer, .synonymcontainer {
         max-width: 500px;
@@ -64,13 +103,13 @@
         width: 70%;
         padding: 10px;
         margin: 17px 3px;
-        border: 2px solid rgb(2, 150, 248);
+        border: 2px solid darkgoldenrod;
         border-radius: 12px;
     }
     .left {
         float: left;
         clear: both;
-        background-color: #6E00FF;
+        background-color: white;
     }
     .right {
         float: right;
@@ -79,10 +118,26 @@
     }
     .timercontainer {
         display: block;
-        padding: 3px;
         border-radius: 5px;
     }
-    .btn, .btn-yourturn {
+    .time{
+        width: 120px;
+        height: 120px;
+        text-align: center;
+        border: 2px solid darkgoldenrod;
+        border-radius: 50%;
+        padding: 0;
+    }
+    .heading{
+        border: 2px solid darkgoldenrod;
+        padding: 10px; 
+    }
+    .heading h1{
+        /* background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #efc443 100%); */
+        padding: 0 7px;
+        margin: 0;
+    }
+    .btn {
         cursor: pointer;
         border: 2px solid rgb(53, 53, 53);
         border-radius: 6px;
@@ -92,7 +147,7 @@
         color: #fff;
     }
     .btn {
-        background-color: #6E00FF;
+        background: linear-gradient(90deg, #020024 0%, #090979 35%, #efc443 100%);
     }
     .btn-yourturn {
         background-color: rgb(238, 58, 58);
@@ -103,8 +158,26 @@
         text-align: center;
         width: 100%;
     }
-    #messageInp, #answerInp {
+    #messageInp{
         width: 92%;
+    }
+    #answerInp {
+        width: 100%;
+        height: 50px;
+        padding: 0 10px;
+        border: 2px solid darkgoldenrod;
+        outline: none !important;
+        border-radius: 10px;
+
+    }
+    .ansbtn{
+        padding: 10px;
+        margin: 0 15px;
+        border-radius: 10px;
+        border: 2px solid darkgoldenrod;
+        background: linear-gradient(90deg, #020024 0%, #090979 35%, #efc443 100%);
+        color: white;
+        font-weight: bold;
     }
     .col-4, .col-8 {
         padding: 0 15px;
@@ -114,14 +187,14 @@
     }
     .send {
         text-align: center;
-        border: 2px solid #6E00FF;
+        border: 2px solid darkgoldenrod;
         border-radius: 6px;
         padding: 10px;
     }
     .userdetails {
         display: flex;
         align-items: center;
-        background-color: #E7E7E7; /* Grey background */
+        background: linear-gradient(90deg, #020024 0%, #090979 35%, #efc443 100%); /* Grey background */
     }
     
     .avatar-container {
@@ -137,6 +210,7 @@
     }
     
     .username {
+        color: white;
         margin-left: 15px; /* Increased margin to space out from larger avatar */
         font-size: 20px; /* Increased font size */
         font-weight: bold; /* Bold text */

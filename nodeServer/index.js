@@ -99,9 +99,11 @@ io.on('connection', socket => {
   socket.on('player-answer', answer => {
     const roomsArray = Array.from(socket.rooms);
     const room = roomsArray.find(roomName => roomName !== socket.id);
+    if (!rooms[room]) return; // To make sure the room exists
+  
     const currentRound = rooms[room].currentRound;
-    const correctWord = rooms[room].words[currentRound-1].original;
-
+    const correctWord = rooms[room].words[currentRound - 1].original;
+  
     if (answer === correctWord && !rooms[room].roundWinner) {
       users[socket.id].score += 1;
       clearTimeout(rooms[room].timer);
@@ -110,6 +112,7 @@ io.on('connection', socket => {
       setTimeout(() => startRound(room), 2000);
     }
   });
+  
 
   socket.on('disconnect', () => {
     for (const room in rooms) {

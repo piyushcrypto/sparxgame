@@ -29,6 +29,13 @@ const questionappend = (question, position = 'center') => {
   questionContainer.append(questionElement);
 }
 
+const questionwordappend = (questionword) => {
+  const questionElement = document.createElement('div');
+  questionElement.innerText = questionword;
+  questionElement.classList.add('questionword');
+  questionContainer.append(questionElement);
+}
+
 const timerappend = (time, position = 'center') => {
   const timerElement = document.createElement('div');
   timerElement.innerText = time;
@@ -83,8 +90,9 @@ socket.on('start-round', data => {
   timerContainer.innerHTML = ''; 
   questionContainer.innerHTML = ''; 
   hintContainer.innerHTML = '';
-  questionappend(`New round started! Unscramble the word: ${data.shuffledWord}`);
-  hintappend(`Hint: Meaning : ${data.hint}`);
+  questionappend(`New round started! Unscramble the word`);
+  questionwordappend(`${data.shuffledWord}`);
+  hintappend(`Hint 1: ${data.hint}`);
   answerInput.value = ''; // Clear the answer input box
   let timertime = data.roundTime
   countdown = setInterval(() => {
