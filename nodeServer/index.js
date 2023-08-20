@@ -1,4 +1,5 @@
 const express = require('express');
+const rateLimit = require("express-rate-limit"); // Rate limiting package
 const fs = require('fs');
 const app = express();
 const axios = require('axios');
@@ -9,6 +10,14 @@ const io = require('socket.io')(httpServer, {
     methods: ["GET", "POST"]
   }
 });
+
+
+// Rate limiter middleware
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
 
 const cors = require('cors');
 
@@ -108,7 +117,7 @@ io.on('connection', socket => {
       users[socket.id].score += 1;
       clearTimeout(rooms[room].timer);
       rooms[room].roundWinner = true;
-      io.to(room).emit('round-winner', { name: users[socket.id].name });
+      io.to(room).emit('round-winner', { name: users[socket.id].name , correctword: correctWord, round: currentRound});
       setTimeout(() => startRound(room), 2000);
     }
   });
@@ -152,7 +161,7 @@ const startRound = async (room) => {
     if (rooms[room]) { // Check if rooms[room] exists
         if(!rooms[room].roundWinner){
           clearTimeout(timerId)
-          io.to(room).emit('round-timeout', originalWord); // Emit a timeout event only if room exists
+          io.to(room).emit('round-timeout', {originalWord: originalWord, currentRound: rooms[room].currentRound}); // Emit a timeout event only if room exists
           startRound(room);
       }
     }
@@ -170,7 +179,7 @@ const endGame = (room) => {
   } else if (scores[0] < scores[1]) {
     winner = users[rooms[room].players[1]].name;
   } else {
-    winner = "No One";
+    winner = "No One !!! Both have Equal Scores.";
   }
   io.to(room).emit('end-game', { winner: winner });
 };

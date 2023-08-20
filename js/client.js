@@ -42,7 +42,12 @@ const timerappend = (time, position = 'center') => {
   timerElement.classList.add('time');
   timerContainer.append(timerElement);
 }
-
+const nameappend = (name) => {
+  const nameElement = document.createElement('div');
+  nameElement.innerText = name;
+  nameElement.classList.add('name');
+  nameContainer.append(nameElement);
+}
 const hintappend = (hint, position = 'center') => {
   const hintElement = document.createElement('div');
   hintElement.innerText = hint;
@@ -105,13 +110,15 @@ socket.on('start-round', data => {
 socket.on('round-winner', data => {
   clearInterval(countdown)
   questionContainer.innerHTML = ''; 
-  questionappend(`${data.name} won the round!`);
+  questionappend(`${data.name} won the round! The correct word was : ${data.correctword}`,'right');
+  append(`${data.name} won the round number ${data.round} ! The correct word was : ${data.correctword}`);
 });
 
-socket.on('round-timeout', originalWord => {
+socket.on('round-timeout', data => {
   questionContainer.innerHTML = ''; 
   clearInterval(countdown)
-  questionappend(`Round Timed Out. The correct answer is ${originalWord}!`);
+  questionappend(`Round number ${data.currentRound} Timed Out.`);
+  append(`Round number ${data.currentRound} Timed Out ! The correct answer is ${data.originalWord}!`);
 });
 
 socket.on('end-game', data => {
@@ -121,9 +128,7 @@ socket.on('end-game', data => {
     // Reload the page after the logic is executed
     questionContainer.innerHTML = '';
     location.reload();
-  }, 3000);
-  
-
+  }, 3000); 
 });
 
 messageform.addEventListener('submit', (e) => {
