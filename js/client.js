@@ -64,7 +64,6 @@ socket.on('user-joined', name => {
 });
 
 socket.on('receive', data => {
-  questionContainer.innerHTML = '';
   append(`${data.name}: ${data.message}`, 'right');
 });
 socket.on('player-two-joined', name => {
