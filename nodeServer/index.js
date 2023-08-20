@@ -151,12 +151,15 @@ const startRound = async (room) => {
   }
   rooms[room].currentRoundTime = resetCurrentRoundTime(rooms[room].currentRound) ;
   const originalWord = rooms[room].words[rooms[room].currentRound].original;
+  var wordDetails;
+  var meaning;
   try{
-    const wordDetails = await fetchWordDetails(originalWord);
-    const meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
-  }catch(error){
-    const wordDetails = await fetchWordDetails(originalWord);
-    const meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+    wordDetails = await fetchWordDetails(originalWord);
+    meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+  }
+  catch(error){
+    wordDetails = await fetchWordDetails(originalWord);
+    meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
   }
 
   rooms[room].roundWinner = false; // Initialize roundWinner to false
