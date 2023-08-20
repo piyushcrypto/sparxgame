@@ -11,7 +11,7 @@ const io = require('socket.io')(httpServer, {
   }
 });
 
-
+app.set('trust proxy', 1);
 // Rate limiter middleware
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
