@@ -76,11 +76,11 @@ io.on('connection', socket => {
         rooms[newRoom] = { players: [socket.id], words: [], timer: null };
         socket.join(newRoom);
         socket.emit('room-created', newRoom);
-        io.to(newRoom).emit('user-joined', name);
+        io.to(newRoom).emit('user-joined', {name: name,  socketid: socket.id});
     } else {
         rooms[room].players.push(socket.id);
         socket.join(room);
-        io.to(room).emit('user-joined', name);   
+        io.to(room).emit('user-joined', {name: name,  socketid: socket.id});   
         io.to(room).emit('player-two-joined', name);         
     }
     users[socket.id] = { name: name, score: 0 };
@@ -117,7 +117,7 @@ io.on('connection', socket => {
       users[socket.id].score += 1;
       clearTimeout(rooms[room].timer);
       rooms[room].roundWinner = true;
-      io.to(room).emit('round-winner', { name: users[socket.id].name , correctword: correctWord, round: currentRound});
+      io.to(room).emit('round-winner', { socketid: socket.id, name: users[socket.id].name , correctword: correctWord, round: currentRound, score: users[socket.id].score});
       setTimeout(() => startRound(room), 2000);
     }
   });
@@ -129,6 +129,7 @@ io.on('connection', socket => {
       if (index !== -1) {
         rooms[room].players.splice(index, 1);
         clearTimeout(rooms[room].timer);
+        rooms[room].timer = null;
         io.to(room).emit('room-closed', users[socket.id]); // Inform remaining players that the room has been closed
         delete rooms[room]; // Delete the room
         break;
@@ -150,8 +151,13 @@ const startRound = async (room) => {
   }
   rooms[room].currentRoundTime = resetCurrentRoundTime(rooms[room].currentRound) ;
   const originalWord = rooms[room].words[rooms[room].currentRound].original;
-  const wordDetails = await fetchWordDetails(originalWord);
-  const meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+  try{
+    const wordDetails = await fetchWordDetails(originalWord);
+    const meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+  }catch(error){
+    const wordDetails = await fetchWordDetails(originalWord);
+    const meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+  }
 
   rooms[room].roundWinner = false; // Initialize roundWinner to false
   const shuffledWord = rooms[room].words[rooms[room].currentRound].shuffled;
@@ -161,6 +167,7 @@ const startRound = async (room) => {
     if (rooms[room]) { // Check if rooms[room] exists
         if(!rooms[room].roundWinner){
           clearTimeout(timerId)
+          rooms[room].timer = null; // Nullify the timer;
           io.to(room).emit('round-timeout', {originalWord: originalWord, currentRound: rooms[room].currentRound}); // Emit a timeout event only if room exists
           startRound(room);
       }

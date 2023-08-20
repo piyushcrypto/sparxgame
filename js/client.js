@@ -6,11 +6,14 @@ const answerInput = document.getElementById('answerInp'); // Assume an input box
 const messageContainer = document.querySelector(".messagecontainer");
 const questionContainer = document.querySelector(".questioncontainer");
 const timerContainer = document.querySelector('.timercontainer');
+const scoreContainer = document.querySelector('.scorecontainer');
 const hintContainer = document.querySelector('.hintcontainer'); // Assume a display element for the timer
 const MAX_ROUNDS_PER_GAME = 10;
 const INITIAL_ROUND_TIME = 30000; // 30 seconds
 let TIME_DECREMENT_PER_ROUND = 1000;
 let currRoundWinner = false;
+let playerScore = 0;
+let opponentScore = 0;
 const resetCurrentRoundTime = () => INITIAL_ROUND_TIME - TIME_DECREMENT_PER_ROUND; // Function to reset round time
 var countdown;
 
@@ -42,17 +45,23 @@ const timerappend = (time, position = 'center') => {
   timerElement.classList.add('time');
   timerContainer.append(timerElement);
 }
-const nameappend = (name) => {
-  const nameElement = document.createElement('div');
-  nameElement.innerText = name;
-  nameElement.classList.add('name');
-  nameContainer.append(nameElement);
-}
+// const nameappend = (name) => {
+//   const nameElement = document.createElement('div');
+//   nameElement.innerText = name;
+//   nameElement.classList.add('name');
+//   nameContainer.append(nameElement);
+// }
 const hintappend = (hint, position = 'center') => {
   const hintElement = document.createElement('div');
   hintElement.innerText = hint;
   hintElement.classList.add('hint');
   hintContainer.append(hintElement);
+}
+const scoreappend = (score) => {
+  const scoreElement = document.createElement('div');
+  scoreElement.innerText = score;
+  scoreElement.classList.add('score');
+  scoreContainer.append(scoreElement);
 }
 let Username = 'abcd';
 // let Username = prompt("Enter your Username for Joining");
@@ -64,8 +73,8 @@ let Username = 'abcd';
 
 socket.emit('new-user-joined', Username);
 
-socket.on('user-joined', name => {
-  append(`${name} joined.`);
+socket.on('user-joined', data => {
+  append(`${data.name} joined.`);
 });
 
 socket.on('receive', data => {
@@ -110,6 +119,13 @@ socket.on('start-round', data => {
 socket.on('round-winner', data => {
   clearInterval(countdown)
   questionContainer.innerHTML = ''; 
+  if (data.socketid === socket.id) {
+    playerScore++;
+  } else {
+    opponentScore++;
+  }
+  // Update the score container
+  document.getElementById('scorecontainer').textContent = `${playerScore}:${opponentScore}`; 
   questionappend(`${data.name} won the round! The correct word was : ${data.correctword}`,'right');
   append(`${data.name} won the round number ${data.round} ! The correct word was : ${data.correctword}`);
 });

@@ -215,3 +215,9 @@
         font-size: 20px; /* Increased font size */
         font-weight: bold; /* Bold text */
     }
+    .scorecontainer{
+        margin-right: 9rem;
+        color: white;
+        font-weight: 600;
+        font-size: 75px;
+    }
