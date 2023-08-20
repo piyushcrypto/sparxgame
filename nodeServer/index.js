@@ -15,7 +15,7 @@ app.set('trust proxy', 1);
 // Rate limiter middleware
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 3 // limit each IP to 100 requests per windowMs
 });
 app.use(limiter);
 
@@ -27,7 +27,7 @@ app.use(cors());
 
 
 const MAX_PLAYERS_PER_ROOM = 2; // Maximum players allowed per room
-const MAX_ROUNDS_PER_GAME = 10;
+const MAX_ROUNDS_PER_GAME = 2;
 const WORDS_PER_ROOM = 10;
 const INITIAL_ROUND_TIME = 30000; // 30 seconds
 const resetCurrentRoundTime = (round) => INITIAL_ROUND_TIME - round*1000; // Function to reset round time
@@ -58,6 +58,37 @@ const fetchWordDetails = async (word) => {
     return 'Ouch !!! No hint available for the selected word!!!';
   }
 };
+
+const logErrorToFile = (errorMessage) => {
+  // Construct the error object with the message and timestamp
+  const errorObj = {
+    timestamp: new Date().toISOString(),
+    error: errorMessage,
+  };
+
+  // Read the existing errors from the file
+  fs.readFile('errorLogs.json', 'utf8', (readErr, data) => {
+    if (readErr) {
+      console.error('Error reading errors.json:', readErr);
+      return;
+    }
+
+    // Parse the existing errors and add the new one
+    let errors = [];
+    if (data) {
+      errors = JSON.parse(data);
+    }
+    errors.push(errorObj);
+
+    // Write the updated errors back to the file
+    fs.writeFile('errorLogs.json', JSON.stringify(errors, null, 2), (writeErr) => {
+      if (writeErr) {
+        console.error('Error writing to errors.json:', writeErr);
+      }
+    });
+  });
+};
+
 io.on('connection', socket => {
 
   const getAvailableRoom = () => {
@@ -141,43 +172,49 @@ io.on('connection', socket => {
 
 const startRound = async (room) => {
   if (!rooms[room]) {
-    // Room does not exist, so exit the function
+    // Log the error to the file
+    logErrorToFile(`Room does not exist: ${room}`);
     return;
   }
 
-  if (rooms[room].currentRound >= MAX_ROUNDS_PER_GAME) {
-    endGame(room);
-    return;
-  }
-  rooms[room].currentRoundTime = resetCurrentRoundTime(rooms[room].currentRound) ;
-  const originalWord = rooms[room].words[rooms[room].currentRound].original;
-  var wordDetails;
-  var meaning;
-  try{
-    wordDetails = await fetchWordDetails(originalWord);
-    meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
-  }
-  catch(error){
-    wordDetails = await fetchWordDetails(originalWord);
-    meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
-  }
+  try {
+    if (rooms[room].currentRound >= MAX_ROUNDS_PER_GAME) {
+      endGame(room);
+      return;
+    }
+    rooms[room].currentRoundTime = resetCurrentRoundTime(rooms[room].currentRound);
+    const originalWord = rooms[room].words[rooms[room].currentRound].original;
+    var wordDetails;
+    var meaning;
+    try {
+      wordDetails = await fetchWordDetails(originalWord);
+      meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+    } catch (error) {
+      wordDetails = await fetchWordDetails(originalWord);
+      meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+    }
 
-  rooms[room].roundWinner = false; // Initialize roundWinner to false
-  const shuffledWord = rooms[room].words[rooms[room].currentRound].shuffled;
-  io.to(room).emit('start-round', {shuffledWord: shuffledWord, hint: meaning, roundTime: rooms[room].currentRoundTime});
+    rooms[room].roundWinner = false; // Initialize roundWinner to false
+    const shuffledWord = rooms[room].words[rooms[room].currentRound].shuffled;
+    io.to(room).emit('start-round', {shuffledWord: shuffledWord, hint: meaning, roundTime: rooms[room].currentRoundTime});
 
-  const timerId = setTimeout(() => {
-    if (rooms[room]) { // Check if rooms[room] exists
-        if(!rooms[room].roundWinner){
-          clearTimeout(timerId)
+    const timerId = setTimeout(() => {
+      if (rooms[room]) { // Check if rooms[room] exists
+        if (!rooms[room].roundWinner) {
+          clearTimeout(timerId);
           rooms[room].timer = null; // Nullify the timer;
           io.to(room).emit('round-timeout', {originalWord: originalWord, currentRound: rooms[room].currentRound}); // Emit a timeout event only if room exists
           startRound(room);
+        }
       }
-    }
-  }, rooms[room].currentRoundTime);
-  rooms[room].timer = timerId;
-  rooms[room].currentRound += 1;
+    }, rooms[room].currentRoundTime);
+
+    rooms[room].timer = timerId;
+    rooms[room].currentRound += 1;
+  } catch (error) {
+    // Log the error to the file
+    logErrorToFile(`Error starting round for room: ${room}\n${error}`);
+  }
 };
 
 
