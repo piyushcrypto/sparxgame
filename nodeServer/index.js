@@ -241,7 +241,7 @@ const startRound = async (room) => {
     }
 
     const shuffledWord = currentWord.shuffled;
-    io.to(room).emit('start-round', {shuffledWord: shuffledWord, hint: meaning, hint2: hint2, roundTime: rooms[room].currentRoundTime});
+    io.to(room).emit('start-round', {currentround: rooms[room].currentRound ,shuffledWord: shuffledWord, hint: meaning, hint2: hint2, roundTime: rooms[room].currentRoundTime});
 
     const timerId = setTimeout(() => {
       if (rooms[room]) { // Check if rooms[room] exists

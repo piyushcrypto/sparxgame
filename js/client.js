@@ -9,6 +9,7 @@ const timerContainer = document.querySelector('.timercontainer');
 const scoreContainer = document.querySelector('.scorecontainer');
 const hintContainer = document.querySelector('.hintcontainer'); 
 const hinttwoContainer = document.querySelector('.hinttwocontainer');
+const audio = new Audio('ting.mp3');
 const MAX_ROUNDS_PER_GAME = 10;
 const INITIAL_ROUND_TIME = 30000; // 30 seconds
 let TIME_DECREMENT_PER_ROUND = 1000;
@@ -17,6 +18,11 @@ let playerScore = 0;
 let opponentScore = 0;
 const resetCurrentRoundTime = () => INITIAL_ROUND_TIME - TIME_DECREMENT_PER_ROUND; // Function to reset round time
 var countdown;
+
+window.addEventListener('load', () => {
+  audio.play(); // Play the audio
+  setTimeout(() => audio.pause(), 100); // Pause the audio after a short time
+});
 
 const append = (message, position = 'left') => {
   const messageElement = document.createElement('div');
@@ -29,6 +35,7 @@ const append = (message, position = 'left') => {
   const clearfix = document.createElement('div');
   clearfix.style.clear = 'both';
   messageContainer.appendChild(clearfix);
+  messageContainer.scrollTop = messageContainer.scrollHeight - messageContainer.clientHeight;
 };
 
 const questionappend = (question, position = 'center') => {
@@ -80,6 +87,7 @@ socket.on('user-joined', data => {
 
 socket.on('receive', data => {
   append(`${data.name}: ${data.message}`, 'right');
+  audio.play();
 });
 socket.on('player-two-joined', name => {
   questionContainer.innerHTML = '';
@@ -105,6 +113,14 @@ socket.on('start-round', data => {
   questionContainer.innerHTML = ''; 
   hintContainer.innerHTML = '';
   hinttwoContainer.innerHTML = '';
+  if (data.currentround === 0) {
+    // Enable the send and submit buttons
+    document.getElementById('message-button').disabled = false;
+    document.getElementById('answer-button').disabled = false;
+    document.getElementById('messageInp').disabled = false;
+    document.getElementById('answerInp').disabled = false;
+  }
+
   questionappend(`New round started! Unscramble the word`);
   questionwordappend(`${data.shuffledWord}`);
   hintappend(`Hint One: ${data.hint}`);
@@ -164,6 +180,10 @@ document.getElementById('exit-btn').addEventListener('click', () => {
 messageform.addEventListener('submit', (e) => {
   e.preventDefault();
   const message = messageInput.value;
+  if (message.trim() === '') {
+    // If empty, do nothing and return
+    return;
+  }
   append(`You: ${message}`, 'left');
   socket.emit('send', message);
   messageInput.value = '';

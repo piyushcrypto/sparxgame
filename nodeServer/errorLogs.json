@@ -108,5 +108,25 @@
     "timestamp": "2023-08-20T20:52:22.120Z",
     "error": "Error starting round for room: room1692544767350\nTypeError: Cannot read property 'shuffled' of undefined",
     "stackTrace": "Error: Error starting round for room: room1692544767350\nTypeError: Cannot read property 'shuffled' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:252:5)\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-21T11:47:26.608Z",
+    "error": "Error starting round for room: room1692598557875\nTypeError: Cannot set property 'roundWinner' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692598557875\nTypeError: Cannot set property 'roundWinner' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:261:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-21T11:48:10.450Z",
+    "error": "Room does not exist: room1692598687400",
+    "stackTrace": "Error: Room does not exist: room1692598687400\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:201:5)\n    at Timeout._onTimeout (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:152:17)\n    at listOnTimeout (internal/timers.js:557:17)\n    at processTimers (internal/timers.js:500:7)"
+  },
+  {
+    "timestamp": "2023-08-21T11:49:02.348Z",
+    "error": "Room does not exist: room1692598737861",
+    "stackTrace": "Error: Room does not exist: room1692598737861\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:201:5)\n    at Timeout._onTimeout (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:152:17)\n    at listOnTimeout (internal/timers.js:557:17)\n    at processTimers (internal/timers.js:500:7)"
+  },
+  {
+    "timestamp": "2023-08-21T12:07:54.002Z",
+    "error": "Error starting round for room: room1692599810212\nTypeError: Cannot set property 'roundWinner' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692599810212\nTypeError: Cannot set property 'roundWinner' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:261:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
   }
 ]
