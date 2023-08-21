@@ -72,6 +72,7 @@ const hint2append = (hint2, position = 'center') => {
   hinttwoContainer.append(hint2Element);
 }
 let Username = 'abcd';
+let userid = '1234';
 // let Username = prompt("Enter your Username for Joining");
 
 // // Keep prompting the user until a non-empty, non-null value is entered
@@ -79,7 +80,7 @@ let Username = 'abcd';
 //   Username = prompt("Username cannot be empty. Enter your Username for Joining");
 // }
 
-socket.emit('new-user-joined', Username);
+socket.emit('new-user-joined', {username: Username, userid: userid});
 
 socket.on('user-joined', data => {
   append(`${data.name} joined.`);

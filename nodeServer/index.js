@@ -125,21 +125,21 @@ io.on('connection', socket => {
     return null;
   };
 
-  socket.on('new-user-joined', name => {
+  socket.on('new-user-joined', data => {
     const room = getAvailableRoom();
     if (!room) {
         const newRoom = `room${Date.now()}`;
         rooms[newRoom] = { players: [socket.id], words: [], timer: null };
         socket.join(newRoom);
         socket.emit('room-created', newRoom);
-        io.to(newRoom).emit('user-joined', {name: name,  socketid: socket.id});
+        io.to(newRoom).emit('user-joined', {name: data.username,  socketid: socket.id});
     } else {
         rooms[room].players.push(socket.id);
         socket.join(room);
-        io.to(room).emit('user-joined', {name: name,  socketid: socket.id});   
-        io.to(room).emit('player-two-joined', name);         
+        io.to(room).emit('user-joined', {name: data.username,  socketid: socket.id});   
+        io.to(room).emit('player-two-joined', data.username);         
     }
-    users[socket.id] = { name: name, score: 0 };
+    users[socket.id] = { name: data.username, userid: data.userid, score: 0 };
     if(room){
         if(rooms[room].players.length == MAX_PLAYERS_PER_ROOM){
             const words = getWords();
@@ -265,16 +265,36 @@ const startRound = async (room) => {
 
 
 const endGame = (room) => {
-  let winner;
-  const scores = rooms[room].players.map(playerId => users[playerId].score);
-  if (scores[0] > scores[1]) {
-    winner = users[rooms[room].players[0]].name;
-  } else if (scores[0] < scores[1]) {
-    winner = users[rooms[room].players[1]].name;
-  } else {
-    winner = "No One !!! Both have Equal Scores.";
-  }
+  const playersData = rooms[room].players.map(playerId => {
+    return {
+      username: users[playerId].name,
+      userid: users[playerId].userid,
+      score: users[playerId].score,
+      playerid: playerId
+    };
+  });
+  const winner = playersData[0].score > playersData[1].score ? playersData[0] : playersData[1];
+  const startTime = rooms[room].startTime; // Assuming you have saved the start time in rooms[room]
+  const endTime = new Date().getTime();
+  const netTimeSpent = endTime - startTime;
+
   io.to(room).emit('end-game', { winner: winner });
+
+  // Prepare the room data to send
+  const roomData = {
+    players: playersData,
+    roomid: room,
+    netTimeSpent: netTimeSpent
+  };
+
+  // Send the room data to the specified endpoint
+  axios.post('http://localhost:3000/sparkgamedata', roomData)
+    .then((response) => {
+      console.log('Room data sent successfully:', response.data);
+    })
+    .catch((error) => {
+      console.log('Error sending room data:', error);
+    });
 };
 
 
