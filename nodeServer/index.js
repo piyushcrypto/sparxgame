@@ -27,7 +27,7 @@ app.use(cors());
 
 
 const MAX_PLAYERS_PER_ROOM = 2; // Maximum players allowed per room
-const MAX_ROUNDS_PER_GAME = 2;
+const MAX_ROUNDS_PER_GAME = 10;
 const WORDS_PER_ROOM = 10;
 const INITIAL_ROUND_TIME = 30000; // 30 seconds
 const resetCurrentRoundTime = (round) => INITIAL_ROUND_TIME - round*1000; // Function to reset round time
@@ -45,6 +45,17 @@ const shuffleWord = (word) => {
   return shuffledLetters.join('');
 };
 
+const usecaseexample = (word, example) => {
+  // Check if word and example are defined and are strings, if word is empty, or if example is empty
+  if (typeof word !== 'string' || typeof example !== 'string' || word.length === 0 || example.length === 0) {
+    return 'Only one hint available for this question. Hurry up !!!';
+  }
+
+  const replacement = '_'.repeat(word.length);
+  const regex = new RegExp('\\b' + word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'gi'); // Escape special characters
+  return example.replace(regex, replacement);
+};
+
 const getRandomWords = (words) => {
   const shuffledWords = words.sort(() => 0.5 - Math.random()).slice(0, WORDS_PER_ROOM);
   return shuffledWords.map(word => ({original: word, shuffled: shuffleWord(word) }));
@@ -59,11 +70,23 @@ const fetchWordDetails = async (word) => {
   }
 };
 
+
 const logErrorToFile = (errorMessage) => {
-  // Construct the error object with the message and timestamp
+  // Get the stack trace and error details
+  const error = new Error(errorMessage);
+  const stackTrace = error.stack;
+
+  // Convert the timestamp to Indian Standard Time (IST)
+  const timestamp = new Date();
+  const offsetIST = 330; // IST offset in minutes
+  const dateIST = new Date(timestamp.getTime() + offsetIST * 60 * 1000);
+  const formattedDate = dateIST.toISOString();
+
+  // Construct the error object with the message, timestamp, and stack trace
   const errorObj = {
-    timestamp: new Date().toISOString(),
+    timestamp: formattedDate,
     error: errorMessage,
+    stackTrace: stackTrace,
   };
 
   // Read the existing errors from the file
@@ -88,6 +111,8 @@ const logErrorToFile = (errorMessage) => {
     });
   });
 };
+
+
 
 io.on('connection', socket => {
 
@@ -178,25 +203,45 @@ const startRound = async (room) => {
   }
 
   try {
-    if (rooms[room].currentRound >= MAX_ROUNDS_PER_GAME) {
+    if (rooms[room].currentRound >= MAX_ROUNDS_PER_GAME || !rooms[room].words || !rooms[room].words[rooms[room].currentRound]) {
+      // If the current round exceeds max rounds or the current round word is not defined, end the game
       endGame(room);
       return;
     }
+
     rooms[room].currentRoundTime = resetCurrentRoundTime(rooms[room].currentRound);
     const originalWord = rooms[room].words[rooms[room].currentRound].original;
-    var wordDetails;
-    var meaning;
+    var wordDetails, meaning, example, hint2;
+
     try {
       wordDetails = await fetchWordDetails(originalWord);
-      meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+      if (wordDetails[0] && wordDetails[0].meanings) {
+        example = wordDetails[0].meanings.map(meaning => (meaning.definitions ? meaning.definitions.map(def => def.example) : [])).flat().filter(Boolean);
+        meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+        if (example.length > 0) {
+          hint2 = usecaseexample(originalWord, example[0]);
+        } else {
+          hint2 = "Only one hint available for this question. Hurry up !!!";
+        }
+      } else {
+        throw new Error("Meanings not found in word details");
+      }
     } catch (error) {
-      wordDetails = await fetchWordDetails(originalWord);
-      meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+      meaning = "Ouch !!! No hint available for the selected word!!!";
+      hint2 = "Only one hint available for this question. Hurry up !!!";
     }
 
     rooms[room].roundWinner = false; // Initialize roundWinner to false
-    const shuffledWord = rooms[room].words[rooms[room].currentRound].shuffled;
-    io.to(room).emit('start-round', {shuffledWord: shuffledWord, hint: meaning, roundTime: rooms[room].currentRoundTime});
+
+    const currentWord = rooms[room].words[rooms[room].currentRound];
+    if (!currentWord || !currentWord.shuffled) {
+      // Log the error to the file and return if the current word or shuffled word is not defined
+      logErrorToFile(`Word details not found for room: ${room}, round: ${rooms[room].currentRound}`);
+      return;
+    }
+
+    const shuffledWord = currentWord.shuffled;
+    io.to(room).emit('start-round', {shuffledWord: shuffledWord, hint: meaning, hint2: hint2, roundTime: rooms[room].currentRoundTime});
 
     const timerId = setTimeout(() => {
       if (rooms[room]) { // Check if rooms[room] exists
@@ -216,6 +261,7 @@ const startRound = async (room) => {
     logErrorToFile(`Error starting round for room: ${room}\n${error}`);
   }
 };
+
 
 
 const endGame = (room) => {

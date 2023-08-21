@@ -7,8 +7,9 @@ const messageContainer = document.querySelector(".messagecontainer");
 const questionContainer = document.querySelector(".questioncontainer");
 const timerContainer = document.querySelector('.timercontainer');
 const scoreContainer = document.querySelector('.scorecontainer');
-const hintContainer = document.querySelector('.hintcontainer'); // Assume a display element for the timer
-const MAX_ROUNDS_PER_GAME = 2;
+const hintContainer = document.querySelector('.hintcontainer'); 
+const hinttwoContainer = document.querySelector('.hinttwocontainer');
+const MAX_ROUNDS_PER_GAME = 10;
 const INITIAL_ROUND_TIME = 30000; // 30 seconds
 let TIME_DECREMENT_PER_ROUND = 1000;
 let currRoundWinner = false;
@@ -57,6 +58,12 @@ const hintappend = (hint, position = 'center') => {
   hintElement.classList.add('hint');
   hintContainer.append(hintElement);
 }
+const hint2append = (hint2, position = 'center') => {
+  const hint2Element = document.createElement('div');
+  hint2Element.innerText = hint2;
+  hint2Element.classList.add('hint2');
+  hinttwoContainer.append(hint2Element);
+}
 let Username = 'abcd';
 // let Username = prompt("Enter your Username for Joining");
 
@@ -97,9 +104,11 @@ socket.on('start-round', data => {
   timerContainer.innerHTML = ''; 
   questionContainer.innerHTML = ''; 
   hintContainer.innerHTML = '';
+  hinttwoContainer.innerHTML = '';
   questionappend(`New round started! Unscramble the word`);
   questionwordappend(`${data.shuffledWord}`);
-  hintappend(`Hint 1: ${data.hint}`);
+  hintappend(`Hint One: ${data.hint}`);
+  hint2append(`Hint Two: ${data.hint2}`)
   answerInput.value = ''; // Clear the answer input box
   let timertime = data.roundTime
   countdown = setInterval(() => {

@@ -1,0 +1,112 @@
+[
+  {
+    "timestamp": "2023-08-20T13:57:09.454Z",
+    "error": "Error starting round for room: room1692539823308\nTypeError: Cannot read property 'replace' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T13:57:32.183Z",
+    "error": "Error starting round for room: room1692539844288\nTypeError: Cannot read property 'replace' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T13:58:30.348Z",
+    "error": "Error starting round for room: room1692539898768\nTypeError: Cannot read property 'replace' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:00:10.682Z",
+    "error": "Error starting round for room: room1692540001649\nTypeError: Cannot read property 'replace' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:01:27.499Z",
+    "error": "Error starting round for room: room1692540082068\nTypeError: Cannot read property 'replace' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:01:51.353Z",
+    "error": "Error starting round for room: room1692540104896\nTypeError: Cannot read property 'replace' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:03:09.391Z",
+    "error": "Error starting round for room: room1692540177595\nTypeError: Cannot read property 'replace' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:05:58.314Z",
+    "error": "Error starting round for room: room1692540315815\nTypeError: Cannot read property 'replace' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:06:45.529Z",
+    "error": "Room does not exist: room1692540396520"
+  },
+  {
+    "timestamp": "2023-08-20T14:19:45.976Z",
+    "error": "Error starting round for room: room1692541140970\nTypeError: Cannot read property '0' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:25:08.360Z",
+    "error": "Error starting round for room: room1692541323961\nTypeError: Cannot set property 'roundWinner' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:26:55.842Z",
+    "error": "Error starting round for room: room1692541540831\nTypeError: Cannot read property 'replace' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:49:57.192Z",
+    "error": "Error starting round for room: room1692542923918\nTypeError: Cannot read property 'map' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T14:50:11.881Z",
+    "error": "Room does not exist: room1692543005210"
+  },
+  {
+    "timestamp": "2023-08-20T15:03:07.706Z",
+    "error": "Error starting round for room: room1692543616890\nTypeError: Cannot read property 'map' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T15:04:02.399Z",
+    "error": "Error starting round for room: room1692543789272\nTypeError: Cannot read property 'map' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T15:05:06.843Z",
+    "error": "Error starting round for room: room1692543843766\nTypeError: Cannot read property 'map' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T15:05:51.386Z",
+    "error": "Error starting round for room: room1692543908293\nTypeError: Cannot read property 'map' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T15:06:55.793Z",
+    "error": "Room does not exist: room1692544012514"
+  },
+  {
+    "timestamp": "2023-08-20T15:08:29.446Z",
+    "error": "Error starting round for room: room1692544017339\nTypeError: Cannot set property 'roundWinner' of undefined"
+  },
+  {
+    "timestamp": "2023-08-20T15:08:33.652Z",
+    "error": "Room does not exist: room1692544110620"
+  },
+  {
+    "timestamp": "2023-08-20T15:08:33.669Z",
+    "error": "Room does not exist: room1692544110660"
+  },
+  {
+    "timestamp": "2023-08-20T15:08:38.431Z",
+    "error": "Room does not exist: room1692544115419"
+  },
+  {
+    "timestamp": "2023-08-20T15:08:38.438Z",
+    "error": "Room does not exist: room1692544115431"
+  },
+  {
+    "timestamp": "2023-08-20T15:08:38.448Z",
+    "error": "Room does not exist: room1692544115439"
+  },
+  {
+    "timestamp": "2023-08-20T20:48:49.339Z",
+    "error": "Error starting round for room: room1692544689783\nTypeError: Cannot set property 'roundWinner' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692544689783\nTypeError: Cannot set property 'roundWinner' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:252:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-20T20:52:22.120Z",
+    "error": "Error starting round for room: room1692544767350\nTypeError: Cannot read property 'shuffled' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692544767350\nTypeError: Cannot read property 'shuffled' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:252:5)\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  }
+]
