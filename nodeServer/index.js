@@ -132,14 +132,14 @@ io.on('connection', socket => {
         rooms[newRoom] = { players: [socket.id], words: [], timer: null };
         socket.join(newRoom);
         socket.emit('room-created', newRoom);
-        io.to(newRoom).emit('user-joined', {name: data.username,  socketid: socket.id});
+        io.to(newRoom).emit('user-joined', {name: data.Username,  socketid: socket.id});
     } else {
         rooms[room].players.push(socket.id);
         socket.join(room);
-        io.to(room).emit('user-joined', {name: data.username,  socketid: socket.id});   
-        io.to(room).emit('player-two-joined', data.username);         
+        io.to(room).emit('user-joined', {name: data.Username,  socketid: socket.id});   
+        io.to(room).emit('player-two-joined', data.Username);         
     }
-    users[socket.id] = { name: data.username, userid: data.userid, score: 0 };
+    users[socket.id] = { name: data.Username, userid: data.Userid, score: 0 };
     if(room){
         if(rooms[room].players.length == MAX_PLAYERS_PER_ROOM){
             const words = getWords();
