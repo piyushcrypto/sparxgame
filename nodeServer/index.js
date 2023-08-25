@@ -88,114 +88,7 @@ const logErrorToFile = (errorMessage) => {
     error: errorMessage,
     stackTrace: stackTrace,
   };
-
-  // Read the existing errors from the file
-  fs.readFile('errorLogs.json', 'utf8', (readErr, data) => {
-    if (readErr) {
-      console.error('Error reading errors.json:', readErr);
-      return;
-    }
-
-    // Parse the existing errors and add the new one
-    let errors = [];
-    if (data) {
-      errors = JSON.parse(data);
-    }
-    errors.push(errorObj);
-
-    // Write the updated errors back to the file
-    fs.writeFile('errorLogs.json', JSON.stringify(errors, null, 2), (writeErr) => {
-      if (writeErr) {
-        console.error('Error writing to errors.json:', writeErr);
-      }
-    });
-  });
-};
-
-
-
-io.on('connection', socket => {
-
-  const getAvailableRoom = () => {
-    for (const room in rooms) {
-      if (rooms[room].players && rooms[room].players.length < MAX_PLAYERS_PER_ROOM) {
-        return room;
-      }
-    }
-    return null;
-  };
-
-  socket.on('new-user-joined', data => {
-    const room = getAvailableRoom();
-    if (!room) {
-        const newRoom = `room${Date.now()}`;
-        rooms[newRoom] = { players: [socket.id], words: [], timer: null };
-        socket.join(newRoom);
-        socket.emit('room-created', newRoom);
-        io.to(newRoom).emit('user-joined', {name: data.Username,  socketid: socket.id});
-    } else {
-        rooms[room].players.push(socket.id);
-        socket.join(room);
-        io.to(room).emit('user-joined', {name: data.Username,  socketid: socket.id});   
-        io.to(room).emit('player-two-joined', data.Username);         
-    }
-    users[socket.id] = { name: data.Username, userid: data.Userid, score: 0 };
-    if(room){
-        if(rooms[room].players.length == MAX_PLAYERS_PER_ROOM){
-            const words = getWords();
-            const randomWordsWithShuffled = getRandomWords(words);
-            rooms[room].words = randomWordsWithShuffled;
-            rooms[room].currentRound = 0;
-            rooms[room].currentRoundTime = INITIAL_ROUND_TIME;
-            setTimeout(() => {
-            //initialize the round start
-                startRound(room);
-            }, 3000);
-        } 
-    } 
-  });
-
-  socket.on('send', message => {
-    const roomsArray = Array.from(socket.rooms);
-    const room = roomsArray.find(roomName => roomName !== socket.id);
-    socket.broadcast.to(room).emit('receive', { message: message, name: users[socket.id].name });
-  });
-
-  socket.on('player-answer', answer => {
-    const roomsArray = Array.from(socket.rooms);
-    const room = roomsArray.find(roomName => roomName !== socket.id);
-    if (!rooms[room]) return; // To make sure the room exists
-  
-    const currentRound = rooms[room].currentRound;
-    const correctWord = rooms[room].words[currentRound - 1].original;
-  
-    if (answer === correctWord && !rooms[room].roundWinner) {
-      users[socket.id].score += 1;
-      clearTimeout(rooms[room].timer);
-      rooms[room].roundWinner = true;
-      io.to(room).emit('round-winner', { socketid: socket.id, name: users[socket.id].name , correctword: correctWord, round: currentRound, score: users[socket.id].score});
-      setTimeout(() => startRound(room), 2000);
-    }
-  });
-  
-
-  socket.on('disconnect', () => {
-    for (const room in rooms) {
-      const index = rooms[room].players.indexOf(socket.id);
-      if (index !== -1) {
-        rooms[room].players.splice(index, 1);
-        clearTimeout(rooms[room].timer);
-        rooms[room].timer = null;
-        io.to(room).emit('room-closed', users[socket.id]); // Inform remaining players that the room has been closed
-        delete rooms[room]; // Delete the room
-        break;
-      }
-    }
-  });
-  
-});
-
-const startRound = async (room) => {
+  const startRound = async (room) => {
   if (!rooms[room]) {
     // Log the error to the file
     logErrorToFile(`Room does not exist: ${room}`);
@@ -263,22 +156,227 @@ const startRound = async (room) => {
 };
 
 
+  // Read the existing errors from the file
+  fs.readFile('errorLogs.json', 'utf8', (readErr, data) => {
+    if (readErr) {
+      console.error('Error reading errors.json:', readErr);
+      return;
+    }
 
-const endGame = (room) => {
+    // Parse the existing errors and add the new one
+    let errors = [];
+    if (data) {
+      errors = JSON.parse(data);
+    }
+    errors.push(errorObj);
+
+    // Write the updated errors back to the file
+    fs.writeFile('errorLogs.json', JSON.stringify(errors, null, 2), (writeErr) => {
+      if (writeErr) {
+        console.error('Error writing to errors.json:', writeErr);
+      }
+    });
+  });
+};
+
+
+
+io.on('connection', socket => {
+
+  const getAvailableRoom = () => {
+    for (const room in rooms) {
+      if (rooms[room].players && rooms[room].players.length < MAX_PLAYERS_PER_ROOM) {
+        return room;
+      }
+    }
+    return null;
+  };
+
+  socket.on('new-user-joined', data => {
+    const room = getAvailableRoom();
+    if (!room) {
+        const newRoom = `room${Date.now()}`;
+        rooms[newRoom] = { players: [socket.id], words: [], timer: null };
+        socket.join(newRoom);
+        socket.emit('room-created', newRoom);
+        io.to(newRoom).emit('user-joined', {name: data.Username,  socketid: socket.id});
+    } else {
+        rooms[room].players.push(socket.id);
+        socket.join(room);
+        io.to(room).emit('user-joined', {name: data.Username,  socketid: socket.id});   
+        io.to(room).emit('player-two-joined', data.Username);         
+    }
+    users[socket.id] = { name: data.Username, userid: data.Userid, score: 0 };
+    if(room){
+        if(rooms[room].players.length == MAX_PLAYERS_PER_ROOM){
+            const words = getWords();
+            const randomWordsWithShuffled = getRandomWords(words);
+            rooms[room].words = randomWordsWithShuffled;
+            rooms[room].currentRound = 0;
+            rooms[room].currentRoundTime = INITIAL_ROUND_TIME;
+            rooms[room].startTime= new Date().getTime()
+            setTimeout(() => {
+            //initialize the round start
+                startRound(room);
+            }, 3000);
+        } 
+    } 
+  });
+
+  socket.on('send', message => {
+    const roomsArray = Array.from(socket.rooms);
+    const room = roomsArray.find(roomName => roomName !== socket.id);
+    socket.broadcast.to(room).emit('receive', { message: message, name: users[socket.id].name });
+  });
+
+  socket.on('player-answer', answer => {
+    const roomsArray = Array.from(socket.rooms);
+    const room = roomsArray.find(roomName => roomName !== socket.id);
+    if (!rooms[room]) return; // To make sure the room exists
+  
+    const currentRound = rooms[room].currentRound;
+    const correctWord = rooms[room].words[currentRound - 1].original;
+  
+    if (answer === correctWord && !rooms[room].roundWinner) {
+      users[socket.id].score += 1;
+      clearTimeout(rooms[room].timer);
+      rooms[room].roundWinner = true;
+      io.to(room).emit('round-winner', { socketid: socket.id, name: users[socket.id].name , correctword: correctWord, round: currentRound, score: users[socket.id].score});
+      setTimeout(() => startRound(room), 2000);
+    }
+  });
+  
+
+  socket.on('disconnect', () => {
+    try {
+      for (const room in rooms) {
+        const index = rooms[room].players.indexOf(socket.id);
+        if (index !== -1) {
+          // Check if there was only one player in the room
+          if ((rooms[room].players.length === 1)) {
+            // If only one player, delete the room without ending the game or the net time spent is less than that of one round
+            clearTimeout(rooms[room].timer);
+            rooms[room].timer = null;
+            delete rooms[room];
+          } else {
+            // If more than one player, end the game and then delete the room
+            endGame(room, 1, socket);
+            setTimeout(() => {
+              if (rooms[room]) { // Check if the room still exists
+                rooms[room].players.splice(index, 1);
+                clearTimeout(rooms[room].timer);
+                rooms[room].timer = null;
+                delete rooms[room];
+              }
+            }, 1500);
+          }
+          break;
+        }
+      }
+    } catch (error) {
+      // Log the error to the specified error file
+      logErrorToFile(`An error occurred during disconnect: ${error}`);
+    }
+  });
+  
+  
+  
+});
+
+const startRound = async (room) => {
+  if (!rooms[room]) {
+    logErrorToFile(`Room does not exist: ${room}`);
+    return;
+  }
+
+  try {
+    if (rooms[room].currentRound >= MAX_ROUNDS_PER_GAME || !rooms[room].words || !rooms[room].words[rooms[room].currentRound]) {
+      endGame(room);
+      return;
+    }
+
+    rooms[room].roundWinner = false;
+    rooms[room].currentRoundTime = resetCurrentRoundTime(rooms[room].currentRound);
+    const originalWord = rooms[room].words[rooms[room].currentRound].original;
+    var wordDetails, meaning, example, hint2;
+
+    try {
+      wordDetails = await fetchWordDetails(originalWord);
+      if (wordDetails[0] && wordDetails[0].meanings) {
+        example = wordDetails[0].meanings.map(meaning => (meaning.definitions ? meaning.definitions.map(def => def.example) : [])).flat().filter(Boolean);
+        meaning = JSON.stringify(wordDetails[0]["meanings"][0]["definitions"][0]["definition"]);
+        if (example.length > 0) {
+          hint2 = usecaseexample(originalWord, example[0]);
+        } else {
+          hint2 = "Only one hint available for this question. Hurry up !!!";
+        }
+      } else {
+        throw new Error("Meanings not found in word details");
+      }
+    } catch (error) {
+      meaning = "Ouch !!! No hint available for the selected word!!!";
+      hint2 = "Only one hint available for this question. Hurry up !!!";
+    }
+
+    const currentWord = rooms[room].words[rooms[room].currentRound];
+    if (!currentWord || !currentWord.shuffled) {
+      logErrorToFile(`Word details not found for room: ${room}, round: ${rooms[room].currentRound}`);
+      return;
+    }
+
+    const shuffledWord = currentWord.shuffled;
+    io.to(room).emit('start-round', { currentround: rooms[room].currentRound, shuffledWord: shuffledWord, hint: meaning, hint2: hint2, roundTime: rooms[room].currentRoundTime });
+
+    const timerId = setTimeout(() => {
+      if (rooms[room] && !rooms[room].roundWinner) {
+        clearTimeout(timerId);
+        rooms[room].timer = null;
+        io.to(room).emit('round-timeout', { originalWord: originalWord, currentRound: rooms[room].currentRound });
+        startRound(room);
+      }
+    }, rooms[room].currentRoundTime);
+
+    rooms[room].timer = timerId;
+    rooms[room].currentRound += 1;
+  } catch (error) {
+    logErrorToFile(`Error starting round for room: ${room}\n${error}`);
+  }
+};
+
+
+
+const endGame = (room, endtype = 0, socket = null) => {
+  if (!rooms[room] || !rooms[room].players) {
+    console.error(`Room or players not found for room: ${room}`);
+    return;
+  }
+
   const playersData = rooms[room].players.map(playerId => {
     return {
-      username: users[playerId].name,
-      userid: users[playerId].userid,
-      score: users[playerId].score,
+      username: users[playerId] ? users[playerId].name : 'Unknown',
+      userid: users[playerId] ? users[playerId].userid : 'Unknown',
+      score: users[playerId] ? users[playerId].score : 0,
       playerid: playerId
     };
   });
-  const winner = playersData[0].score > playersData[1].score ? playersData[0] : playersData[1];
+
+  let winner = null;
+
+  if (playersData.length > 1) {
+    winner = playersData[0].score > playersData[1].score ? playersData[0] : playersData[1];
+  } else if (playersData.length === 1) {
+    winner = playersData[0]; // If there's only one player left, declare them the winner
+  }
+
   const startTime = rooms[room].startTime; // Assuming you have saved the start time in rooms[room]
   const endTime = new Date().getTime();
-  const netTimeSpent = endTime - startTime;
+  const netTimeSpent = (endTime - startTime)/1000 ;
 
-  io.to(room).emit('end-game', { winner: winner });
+  if (endtype === 0) {
+    io.to(room).emit('end-game', { winner: winner.username });
+  } else {
+    io.to(room).emit('room-closed', {winner: winner.username}); 
+  }
 
   // Prepare the room data to send
   const roomData = {
@@ -296,6 +394,7 @@ const endGame = (room) => {
       console.log('Error sending room data:', error);
     });
 };
+
 
 
 const PORT = 8000;

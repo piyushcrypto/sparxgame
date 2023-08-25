@@ -218,5 +218,90 @@
     "timestamp": "2023-08-21T18:18:37.043Z",
     "error": "Room does not exist: room1692622075300",
     "stackTrace": "Error: Room does not exist: room1692622075300\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:201:5)\n    at Timeout._onTimeout (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:152:17)\n    at listOnTimeout (internal/timers.js:557:17)\n    at processTimers (internal/timers.js:500:7)"
+  },
+  {
+    "timestamp": "2023-08-22T12:37:28.951Z",
+    "error": "Error starting round for room: room1692688040035\nTypeError: Cannot set property 'roundWinner' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692688040035\nTypeError: Cannot set property 'roundWinner' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:261:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-22T17:21:22.009Z",
+    "error": "Error starting round for room: room1692705051184\nTypeError: Cannot set property 'roundWinner' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692705051184\nTypeError: Cannot set property 'roundWinner' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:265:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-22T17:23:01.028Z",
+    "error": "Error starting round for room: room1692705168998\nTypeError: Cannot set property 'roundWinner' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692705168998\nTypeError: Cannot set property 'roundWinner' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:265:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-23T11:31:31.629Z",
+    "error": "Error starting round for room: room1692770480131\nTypeError: Cannot set property 'roundWinner' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692770480131\nTypeError: Cannot set property 'roundWinner' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:265:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-23T11:31:57.978Z",
+    "error": "Room does not exist: room1692770500740",
+    "stackTrace": "Error: Room does not exist: room1692770500740\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:205:5)\n    at Timeout._onTimeout (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:152:17)\n    at listOnTimeout (internal/timers.js:557:17)\n    at processTimers (internal/timers.js:500:7)"
+  },
+  {
+    "timestamp": "2023-08-23T11:32:48.892Z",
+    "error": "Room does not exist: room1692770522843",
+    "stackTrace": "Error: Room does not exist: room1692770522843\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:205:5)\n    at Timeout._onTimeout (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:152:17)\n    at listOnTimeout (internal/timers.js:557:17)\n    at processTimers (internal/timers.js:500:7)"
+  },
+  {
+    "timestamp": "2023-08-23T11:34:03.113Z",
+    "error": "Error starting round for room: room1692770630985\nTypeError: Cannot set property 'roundWinner' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692770630985\nTypeError: Cannot set property 'roundWinner' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:265:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-23T12:42:35.335Z",
+    "error": "Room does not exist: room1692774705372",
+    "stackTrace": "Error: Room does not exist: room1692774705372\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:272:5)\n    at Timeout._onTimeout (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:218:17)\n    at listOnTimeout (internal/timers.js:557:17)\n    at processTimers (internal/timers.js:500:7)"
+  },
+  {
+    "timestamp": "2023-08-23T12:42:48.708Z",
+    "error": "Error starting round for room: room1692774758357\nTypeError: Cannot read property 'words' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692774758357\nTypeError: Cannot read property 'words' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:326:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-23T12:52:44.528Z",
+    "error": "Room does not exist: room1692775311274",
+    "stackTrace": "Error: Room does not exist: room1692775311274\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:274:5)\n    at Timeout._onTimeout (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:220:17)\n    at listOnTimeout (internal/timers.js:557:17)\n    at processTimers (internal/timers.js:500:7)"
+  },
+  {
+    "timestamp": "2023-08-23T12:52:57.262Z",
+    "error": "Room does not exist: room1692775366939",
+    "stackTrace": "Error: Room does not exist: room1692775366939\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:274:5)\n    at Timeout._onTimeout (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:220:17)\n    at listOnTimeout (internal/timers.js:557:17)\n    at processTimers (internal/timers.js:500:7)"
+  },
+  {
+    "timestamp": "2023-08-23T13:27:41.287Z",
+    "error": "An error occurred during disconnect: ReferenceError: startTime is not defined",
+    "stackTrace": "Error: An error occurred during disconnect: ReferenceError: startTime is not defined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at Socket.<anonymous> (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:280:7)\n    at Socket.emit (events.js:400:28)\n    at Socket.emitReserved (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/typed-events.js:56:22)\n    at Socket._onclose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/socket.js:561:14)\n    at Client.onclose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/client.js:247:20)\n    at Socket.emit (events.js:412:35)\n    at Socket.onClose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/engine.io/build/socket.js:310:18)\n    at Object.onceWrapper (events.js:519:28)\n    at WebSocket.emit (events.js:400:28)"
+  },
+  {
+    "timestamp": "2023-08-23T13:27:50.686Z",
+    "error": "An error occurred during disconnect: ReferenceError: startTime is not defined",
+    "stackTrace": "Error: An error occurred during disconnect: ReferenceError: startTime is not defined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at Socket.<anonymous> (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:280:7)\n    at Socket.emit (events.js:400:28)\n    at Socket.emitReserved (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/typed-events.js:56:22)\n    at Socket._onclose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/socket.js:561:14)\n    at Client.onclose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/client.js:247:20)\n    at Socket.emit (events.js:412:35)\n    at Socket.onClose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/engine.io/build/socket.js:310:18)\n    at Object.onceWrapper (events.js:519:28)\n    at WebSocket.emit (events.js:400:28)"
+  },
+  {
+    "timestamp": "2023-08-23T13:28:19.997Z",
+    "error": "An error occurred during disconnect: ReferenceError: startTime is not defined",
+    "stackTrace": "Error: An error occurred during disconnect: ReferenceError: startTime is not defined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at Socket.<anonymous> (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:280:7)\n    at Socket.emit (events.js:400:28)\n    at Socket.emitReserved (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/typed-events.js:56:22)\n    at Socket._onclose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/socket.js:561:14)\n    at Client.onclose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/client.js:247:20)\n    at Socket.emit (events.js:412:35)\n    at Socket.onClose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/engine.io/build/socket.js:310:18)\n    at Object.onceWrapper (events.js:519:28)\n    at WebSocket.emit (events.js:400:28)"
+  },
+  {
+    "timestamp": "2023-08-23T13:28:44.519Z",
+    "error": "An error occurred during disconnect: ReferenceError: startTime is not defined",
+    "stackTrace": "Error: An error occurred during disconnect: ReferenceError: startTime is not defined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at Socket.<anonymous> (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:280:7)\n    at Socket.emit (events.js:400:28)\n    at Socket.emitReserved (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/typed-events.js:56:22)\n    at Socket._onclose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/socket.js:561:14)\n    at Client.onclose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/socket.io/dist/client.js:247:20)\n    at Socket.emit (events.js:412:35)\n    at Socket.onClose (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/node_modules/engine.io/build/socket.js:310:18)\n    at Object.onceWrapper (events.js:519:28)\n    at WebSocket.emit (events.js:400:28)"
+  },
+  {
+    "timestamp": "2023-08-23T13:29:52.564Z",
+    "error": "Error starting round for room: room1692777582901\nTypeError: Cannot read property 'words' of undefined",
+    "stackTrace": "Error: Error starting round for room: room1692777582901\nTypeError: Cannot read property 'words' of undefined\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:342:5)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+  },
+  {
+    "timestamp": "2023-08-23T13:37:46.332Z",
+    "error": "Room does not exist: room1692778059163",
+    "stackTrace": "Error: Room does not exist: room1692778059163\n    at logErrorToFile (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:76:17)\n    at startRound (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:288:5)\n    at Timeout._onTimeout (/home/piyush/Desktop/Scramble/sparxgame/nodeServer/index.js:220:17)\n    at listOnTimeout (internal/timers.js:557:17)\n    at processTimers (internal/timers.js:500:7)"
   }
 ]

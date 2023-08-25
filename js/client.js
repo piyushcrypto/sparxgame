@@ -71,16 +71,16 @@ const hint2append = (hint2, position = 'center') => {
   hint2Element.classList.add('hint2');
   hinttwoContainer.append(hint2Element);
 }
-let Username = 'abcd';
-let userid = '1234';
-// let Username = prompt("Enter your Username for Joining");
+
+let Userid = '1234';
+ let Username = prompt("Enter your Username for Joining");
 
 // // Keep prompting the user until a non-empty, non-null value is entered
-// while (!Username || Username.trim() === '') {
-//   Username = prompt("Username cannot be empty. Enter your Username for Joining");
-// }
+ while (!Username || Username.trim() === '') {
+   Username = prompt("Username cannot be empty. Enter your Username for Joining");
+ }
 
-socket.emit('new-user-joined', {username: Username, userid: userid});
+socket.emit('new-user-joined', {Username: Username, Userid: Userid});
 
 socket.on('user-joined', data => {
   append(`${data.name} joined.`);
@@ -102,11 +102,12 @@ socket.on('room-created', newRoom => {
 socket.on('room-closed', data => {
   questionContainer.innerHTML = '';
   clearInterval(countdown)
-  questionappend(`Player 2 exited the Room. Creating a new room for you in 3 Seconds.  `);
+  document.getElementById('winner-name').innerText = `Second Player Exited. The winner is ${data.winner}!`;
+  document.getElementById('popup-container').style.display = 'flex';
   setTimeout(() => {
-    // Reload the page after the logic is executed
+    questionContainer.innerHTML = '';
     location.reload();
-  }, 3000);
+  }, 5000);
 });
 
 socket.on('start-round', data => {
@@ -159,7 +160,6 @@ socket.on('round-timeout', data => {
 
 socket.on('end-game', data => {
   questionContainer.innerHTML = '';
-  questionappend(`Game over! The winner is ${data.winner}!`);
   document.getElementById('winner-name').innerText = `The winner is ${data.winner}!`;
   document.getElementById('popup-container').style.display = 'flex';
   setTimeout(() => {
@@ -167,6 +167,11 @@ socket.on('end-game', data => {
      location.reload();
    }, 5000);
 });
+
+socket.on('disconnect', () => {
+  window.location.href = '/connectionlost.html'; // Path to the custom error page
+});
+
 
 document.getElementById('play-again-btn').addEventListener('click', () => {
   document.getElementById('popup-container').style.display = 'none';
